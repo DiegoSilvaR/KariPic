@@ -1,0 +1,54 @@
+<style>
+  .avatar-img {
+    width: 45px;
+    height: 45px;
+  }
+</style>
+
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">Navbar</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <%= link_to "Comments", comments_path, class: "nav-link #{'active' if current_page?(comments_path)}" %>
+        </li>
+        <li class="nav-item">
+          <%= link_to "People", people_path, class: "nav-link #{'active' if current_page?(people_path)}" %>
+        </li>
+        <li class="nav-item">
+          <%= link_to "Home", root_path, class: "nav-link #{'active' if current_page?(root_path)}" %>
+        </li>
+        <li class="nav-item">
+          <%= link_to "Photos", photos_path, class: "nav-link #{'active' if current_page?(photos_path)}" %>
+        </li>
+      </ul>
+      <ul class="navbar-nav ms-auto">
+       <% if person_signed_in? %>
+        <li class="nav-item">
+        <div class="navbar-text me-3">
+          <span class="fw-bold">¡Bienvenid@ <%= current_person.name %>!</span>
+      </div>
+    </li>
+    <li class="nav-item">
+      <%= image_tag current_person.avatar.url, alt: "Avatar", class: "rounded-circle avatar-img", onerror: "this.src='default_avatar.jpg'" %>
+    </li>
+    <li class="nav-item">
+      <%= link_to "Cerrar Sesión", destroy_person_session_path, method: :delete, class: "nav-link" %>
+    </li>
+      <% else %>
+    <li class="nav-item">
+      <%= link_to "Iniciar Sesión", new_person_session_path, class: "nav-link" %>
+    </li>
+    <li class="nav-item">
+      <%= link_to "Registrarse", new_person_registration_path, class: "nav-link" %>
+    </li>
+  <% end %>
+
+      </ul>
+    </div>
+  </div>
+</nav>
