@@ -1,22 +1,27 @@
 class PeopleController < ApplicationController
-  before_action :authenticate_person!, except: [:new, :create]
+  # before_action :authenticate_person!, except: [:new, :create, :sign_in, :log_in]
 
+  # GET /people or /people.json
   def index
     @people = Person.all
   end
 
+  # GET /people/1 or /people/1.json
   def show
     @person = current_person
   end
 
+  # GET /people/new
   def new
     @person = Person.new
   end
 
+  # GET /people/1/edit
   def edit
     @person = current_person
   end
 
+  # POST /people or /people.json
   def create
     @person = Person.new(person_params)
 
@@ -31,6 +36,7 @@ class PeopleController < ApplicationController
     end
   end
 
+  # PATCH/PUT /people/1 or /people/1.json
   def update
     @person = current_person
     respond_to do |format|
@@ -43,6 +49,7 @@ class PeopleController < ApplicationController
     end
   end
 
+  # DELETE /people/1 or /people/1.json
   def destroy
     @person = current_person
     if @person.destroy
@@ -53,6 +60,13 @@ class PeopleController < ApplicationController
   end
 
   private
+    # Use callbacks to share common setup or constraints between actions.
+    def set_person
+      @person = Person.find(params[:id])
+    end
 
-  # Resto del código del controlador...
+    # Only allow a list of trusted parameters through.
+    def person_params
+      params.require(:person).permit(:name, :email, :password_digest, :avatar)
+    end
 end

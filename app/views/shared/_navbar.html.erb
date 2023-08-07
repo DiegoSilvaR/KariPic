@@ -27,27 +27,30 @@
         </li>
       </ul>
       <ul class="navbar-nav ms-auto">
-       <% if person_signed_in? %>
-        <li class="nav-item">
-        <div class="navbar-text me-3">
-          <span class="fw-bold">¡Bienvenid@ <%= current_person.name %>!</span>
-      </div>
-    </li>
-    <li class="nav-item">
-      <%= image_tag current_person.avatar.url, alt: "Avatar", class: "rounded-circle avatar-img", onerror: "this.src='default_avatar.jpg'" %>
-    </li>
-    <li class="nav-item">
-      <%= link_to "Cerrar Sesión", destroy_person_session_path, method: :delete, class: "nav-link" %>
-    </li>
-      <% else %>
-    <li class="nav-item">
-      <%= link_to "Iniciar Sesión", new_person_session_path, class: "nav-link" %>
-    </li>
-    <li class="nav-item">
-      <%= link_to "Registrarse", new_person_registration_path, class: "nav-link" %>
-    </li>
-  <% end %>
-
+        <% if person_signed_in? %>
+          <li class="nav-item">
+            <div class="navbar-text me-3">
+              <span class="fw-bold">¡Bienvenid@ <%= current_person.name %>!</span>
+            </div>
+          </li>
+          <li class="nav-item">
+            <% if current_person.avatar.present? %>
+              <%= image_tag current_person.avatar.url, alt: "Avatar", class: "rounded-circle avatar-img", onerror: "this.src='default_avatar.jpg'" %>
+            <% else %>
+              <i class="fas fa-user-circle fa-2x avatar-img"></i>
+            <% end %>
+          </li>
+          <li class="nav-item">
+            <%= link_to "Cerrar Sesión", destroy_person_session_path, method: :delete, class: "nav-link" %>
+          </li>
+        <% else %>
+          <li class="nav-item">
+            <%= link_to "Iniciar Sesión", new_person_session_path, class: "nav-link" %>
+          </li>
+          <li class="nav-item">
+            <%= link_to "Registrarse", new_person_registration_path, class: "nav-link" %>
+          </li>
+        <% end %>
       </ul>
     </div>
   </div>
